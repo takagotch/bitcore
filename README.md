@@ -2,7 +2,7 @@
 ---
 https://github.com/bitpay/bitcore
 
-```
+```sh
 wallet genkey
 wallet export -o toproxy --nosign
 wallet import toproxy
@@ -85,6 +85,21 @@ gpg --import /tmp/key
 cd bitcore
 npm start insight-previous
 NETWORK=testnet CHAIN=BCH npm start
+
+npm install bitcore-lib
+bower install bitcore-lib
+gulp browser
+git clone https://github.com/bitpay/bitcore-lib
+cd bitcore-lib
+npm install
+gulp test
+
+npm install bitcore-lib-cash
+gulp browser
+gulp test
+
+npm install bitcore-message
+bower install bitcore-message
 ```
 
 ```js
@@ -197,13 +212,48 @@ var decrypted = bob
   .toString();
 
 
+var bitcore = require('bitcore-lib');
+var Message = require('bitcore-message');
+
+var privateKey = bitcore.PrivateKey.fromWIF('xxx');
+var signature = Message('hello, world').sign(privateKey);
+
+var address = 'xxx';
+var signature = 'xxx';
+var verified = Message('hello, world').verify(address, signature);
 
 
+var Mnemonic = require('bitcore-mnemonic');
+var code = new Mnemonic(Mnemonic.Words.SPANISH);
+code.toString();
+var xpriv = code.toHDPrivateKey();
 
 
+var Peer = require('bitcore-p2p').Peer;
 
+var peer = new Peer({host: '127/0.0.1'});
 
+peer.on('ready', function() {
+  console.log(peer.version, peer.subversion, peer.bestHeight);
+});
+peer.on('disconnect', function() {
+  console.log('connection closed');
+});
+peer.connect();
 
+peer.on('inv', function(message) {
+});
+peer.on('tx', function(message) {
+});
+
+var gulp = require('gulp');
+var bitcoreTasks = require('bitcore-build');
+
+bitcoreTasks('submodule');
+gulp.task('default', ['lint', 'test', 'browser', 'coverage']);
+
+var bitcoreTasks = require('bitcore-build');
+bitcoreTasks('submodule', {skipBrowsers: true});
 ```
 
 ```json
