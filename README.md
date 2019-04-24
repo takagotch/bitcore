@@ -34,6 +34,17 @@ npm i bitcore-wallet-client
 node irene.js
 node tomas.js xxxxx
 
+x-identity
+x-signature
+curl http://10.10.11.73.3232/bws/api
+npm run apply:copay
+ifconfig | grep "inet " | grep -v 127.0.0.1
+curl http://localhost:3232/bws/api
+pm2 start app.js --name "bitcoin-wallet-service"
+git clone https://github.com/bitpay/bitcore-wallet-service.git
+cd bitcore-wallet-service
+npm install
+npm start
 ```
 
 ```js
@@ -143,7 +154,38 @@ log.debug('Message!', 1);
 
 ```
 
-```
+```json
+blockchainExplorerOpts: {
+  btc: {
+    livenet: {
+      url: 'https://api.bitcore.io'
+    },
+    testnet: {
+      url: 'http://localhost:3000',
+      regtestEnabled: true
+    },
+  },
+}
+
+"regtest": {
+  "chianSource": "p2p",
+  "transaction": [
+    {
+      "host": "127.0.0.1",
+      "port": 20020
+    }
+  ],
+  "rpc": {
+    "host": "127.0.0.1",
+    "port": 20021,
+    "username": "bitpaytest",
+    "password": "local321"
+  }
+}
+
+http: true,
+privateKeyFile: 'private.pem',
+certificateFile: 'cert.pem'
 ```
 
 
