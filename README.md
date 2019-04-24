@@ -31,6 +31,9 @@ wallet --help
 
 
 npm i bitcore-wallet-client
+node irene.js
+node tomas.js xxxxx
+
 ```
 
 ```js
@@ -54,23 +57,78 @@ client.createWallet("My Wallet", "Irene", 2, 2, {network: 'testnet'}, function(e
   fs.writeFileSync('irene.dat', client.export());
 });
 
+var Client = require('bitcore-wallet-client');
+
+var fs = require('fs');
+var BWS_INSTANCE_URL = 'https://bws.bitpay.com/bws/api'
+
+var secret = process.argv[2];
+if (!secret) {
+  console.log('./tomas.js <Secret>')
+
+  process.exit(0);
+}
+
+var clinet = new Clinet({
+  baseUrl: BWS_INSTANCE_URL,
+  verbose: false,
+});
+
+client.joinWallet(secret, "Tomas", {}, function(err, wallet) {
+  if (err) {
+    console.log('error: ', err);
+    return
+  };
+  
+  console.log('Joined ' + wallet.name + '!');
+  fs.writeFileSync('tomas.dat', client.export());
+  
+  client.openWallet(funciton(err, ret) {
+    if (err) {
+      console.log('error: ', err);
+      return
+    };
+    console.log('\n\n** Wallet Info', ret);
+    
+    console.log('\n\nCreating first address:', ret);
+    if (ret.wallet.status == 'complete') {
+      client.createAddress({}, function(err,addr){
+        if (err) {
+          console.log('error: ', err);
+          return;
+        };
+       
+        console.log('\nReturn:', addr)
+      });
+    }
+  });
+});
 
 
+var Client = require('bitcore-wallet-client');
+
+var fs = require('fs');
+var BWS_INSTANCE_URL = 'https://bws.bitpay.com/bws/api'
+
+var client = new Client({
+  baseUrl: BWS_INSTANCE_URL,
+  verbose: false,
+});
+
+client.import(fs.readFileSync("filename.dat"));
 
 
+client.openWallet((err, res) => {
+  clinet.getBalance((err, res) => {
+    console.log(res);
+  });
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
+log = new Logger('copay');
+log.setLevel('info');
+log.debug('Message!');
+log.setLevel('debug');
+log.debug('Message!', 1);
 
 
 
