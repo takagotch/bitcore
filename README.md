@@ -182,7 +182,19 @@ log.setLevel('debug');
 log.debug('Message!', 1);
 
 
+var alice = ECIES()
+  .privateKey(aliceKey)
+  .publicKey(bobKey.publicKey);
+  
+var message = 'some secret message';
+var encrypted = alice.encrypt(message);
 
+var bob = ECIES()
+  .privateKey(bobKey)
+  .publicKey(aliceKey.publicKey);
+var decrypted = bob
+  .decrypt(encrypted)
+  .toString();
 
 
 
