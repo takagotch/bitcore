@@ -81,6 +81,10 @@ gpg --verify \
   $FILENAME.sig \
   $FILENAME
 gpg --import /tmp/key
+
+cd bitcore
+npm start insight-previous
+NETWORK=testnet CHAIN=BCH npm start
 ```
 
 ```js
