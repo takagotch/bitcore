@@ -45,6 +45,42 @@ git clone https://github.com/bitpay/bitcore-wallet-service.git
 cd bitcore-wallet-service
 npm install
 npm start
+
+git clone https://github.com/bitpay/copay.git
+npm isntall
+npm run apply:copay
+npm run start
+npm run test
+npm run apply:copay
+npm run prepare:copay
+npm run start:android
+npm run apply:copay
+npm run prepare:copay
+npm run start:ios
+npm run apply:copay
+npm run start:desktop
+npm run clean-all
+npm install
+npm run apply:copay
+npm run prepare:copay
+npm run final:android
+npm run clean-all
+npm install
+npm run apply:copay
+npm run prepare:copay
+npm run final:ios
+npm run clean-all
+npm install
+npm run apply:copay
+npm run final:desktop
+COPAY_EXTERNAL_SERVICE_CONFIG_LOCATION="~/.copay/externalServices.json" npm run apply:copay 
+BITPAY_EXTERNAL_SERVICES_CONFIG_LOCATION="~/.bitpay/externalServices.json" npm run apply:bitpay
+cd i18n
+node crowdin_download.js
+gpg --verify \ 
+  $FILENAME.sig \
+  $FILENAME
+gpg --import /tmp/key
 ```
 
 ```js
